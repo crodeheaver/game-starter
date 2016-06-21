@@ -53,15 +53,20 @@ export default class extends Phaser.Sprite {
       this.weapon.fire()
     }
 
+    if (this.game.reset.isDown) {
+      this.reset(this.game.width / 2,this.game.height / 2)
+    }
+
     for (let i = 0; i < this.game.asteroids.length; i++) {
       this.game.physics.arcade.collide(this, this.game.asteroids[i], this.collisionCallback, this.processCallback, this)
     }
     this.weapon.forEach(this.AsteroidColl, this)
     this.game.world.wrap(this, 16)
   }
+
   AsteroidColl (sprite) {
     for (let i = 0; i < this.game.asteroids.length; i++) {
-      this.game.physics.arcade.collide(sprite, this.game.asteroids[i], this.collisionCallback, this.processCallback, this)
+      this.game.physics.arcade.collide(sprite, this.game.asteroids[i], this.asteroidHit, this.processCallback, this)
     }
   }
   processCallback (obj1, obj2) {
@@ -72,8 +77,13 @@ export default class extends Phaser.Sprite {
     return true
   }
 
+  asteroidHit (bullet, asteroid) {
+    bullet.destroy()
+    asteroid.destroy()
+  }
+
   collisionCallback (obj1, obj2) {
-    
+    obj1.kill()
   }
 
   render () {

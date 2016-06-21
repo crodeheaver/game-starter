@@ -7,43 +7,20 @@ export default class extends Phaser.Sprite {
 
     this.game = game
     this.anchor.setTo(0.5)
-    
-    this.game.physics.arcade.enable(this);
-    
-    //this.body.angularVelocity = 90;
-    
+    this.rotation += Math.floor(Math.random() * 20) + 3
+    this.game.physics.arcade.enable(this)
+
+    this.body.velocity.set(Math.floor(Math.random() * 20) + 20)
+    this.game.physics.arcade.velocityFromRotation(this.rotation, 20, this.body.velocity)
+    this.body.maxVelocity = 25
   }
 
   update () {
-        //this.game.physics.arcade.accelerationFromRotation(this.rotation, 200, this.body.acceleration);
-
-        this.body.velocity.set(Math.floor(Math.random() * 20));
-        //this.body.angularVelocity = -300;
-        //this.body.angularVelocity = 300;
-        this.body.angularVelocity = Math.floor(Math.random() * 20);
-        this.screenWrap();
-      
-  }
-  
-  screenWrap () {
-
-    if (this.x < 0)
-    {
-        this.x = this.game.width;
-    }
-    else if (this.x > this.game.width)
-    {
-        this.x = 0;
-    }
-
-    if (this.y < 0)
-    {
-        this.y = this.game.height;
-    }
-    else if (this.y > this.game.height)
-    {
-        this.y = 0;
-    }
+    this.rotation += 0.01
+    this.game.world.wrap(this, 16)
   }
 
+  destroy () {
+    super.destroy()
+  }
 }

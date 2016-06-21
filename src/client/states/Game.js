@@ -2,8 +2,8 @@
 import Phaser from 'phaser'
 import Ship from '../sprites/Ship'
 import Asteroid from '../sprites/Asteroid'
-import {setResponsiveWidth} from '../utils'
-import Socket from './Socket'
+// import {setResponsiveWidth} from '../utils'
+// import Socket from './Socket'
 
 export default class extends Phaser.State {
   init () {}
@@ -11,15 +11,16 @@ export default class extends Phaser.State {
 
   create () {
     this.game.remotePlayers = []
-    this.game.socket = new Socket({
-      game: this.game,
-      url: 'http://localhost'
-    })
+    // this.game.socket = new Socket({
+    //  game: this.game,
+    //  url: 'http://localhost'
+    // })
 
     this.game.key_left = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT)
     this.game.key_right = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT)
     this.game.key_thrust = this.game.input.keyboard.addKey(Phaser.Keyboard.UP)
     this.game.key_fire = this.game.input.keyboard.addKey(Phaser.Keyboard.F)
+    this.game.reset = this.game.input.keyboard.addKey(Phaser.Keyboard.R)
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
 
