@@ -40,7 +40,8 @@ export default class extends Phaser.State {
         x: Math.floor((Math.random() * this.game.world.width)),
         y: Math.floor((Math.random() * this.game.world.height)),
         asset: 'asteroid',
-        physics: Phaser.Physics.ARCADE
+        physics: Phaser.Physics.ARCADE,
+        type: 'Large'
       }))
 
     this.game.asteroids.forEach(asteroid => this.game.add.existing(asteroid))

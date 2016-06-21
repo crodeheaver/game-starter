@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 
 export default class extends Phaser.Sprite {
 
-  constructor ({ game, x, y, asset, physics }) {
+  constructor ({ game, x, y, asset, physics, type }) {
     super(game, x, y, asset)
 
     this.game = game
@@ -13,6 +13,8 @@ export default class extends Phaser.Sprite {
     this.body.velocity.set(Math.floor(Math.random() * 20) + 20)
     this.game.physics.arcade.velocityFromRotation(this.rotation, 20, this.body.velocity)
     this.body.maxVelocity = 25
+    
+    this.type = type;
   }
 
   update () {

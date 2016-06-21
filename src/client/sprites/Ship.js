@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import Asteroid from './Asteroid'
 // import Bullets from './Bullets'
 
 export default class extends Phaser.Sprite {
@@ -55,6 +56,18 @@ export default class extends Phaser.Sprite {
 
     if (this.game.reset.isDown) {
       this.reset(this.game.width / 2,this.game.height / 2)
+      this.game.asteroids.forEach(asteroid=>asteroid.destroy())
+      this.game.asteroids = Array.from(
+      new Array(5), (x, i) => new Asteroid({
+        game: this.game,
+        x: Math.floor((Math.random() * this.game.world.width)),
+        y: Math.floor((Math.random() * this.game.world.height)),
+        asset: 'asteroid',
+        physics: Phaser.Physics.ARCADE,
+        type: 'Large'
+      }))
+
+    this.game.asteroids.forEach(asteroid => this.game.add.existing(asteroid))
     }
 
     for (let i = 0; i < this.game.asteroids.length; i++) {
