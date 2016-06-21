@@ -33,5 +33,6 @@
     "ecstatic": "^1.4.1",
     "phaser": "^2.5.0",
     "socket.io": "^1.4.6"
-  }
+  },
+   "engines": { "node": "6.2.2" }
 }
