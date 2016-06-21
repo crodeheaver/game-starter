@@ -83,15 +83,11 @@ export default class extends Phaser.Sprite {
     }
   }
   processCallback (obj1, obj2) {
-    //  This function can perform your own additional checks on the 2 objects that collided.
-    //  For example you could test for velocity, health, etc.
-    //  This function needs to return either true or false. If it returns true then collision carries on (separating the two objects).
-    //  If it returns false the collision is assumed to have failed and aborts, no further checks or separation happen.
     return true
   }
 
   asteroidHit (bullet, asteroid) {
-    bullet.destroy()
+    bullet.kill()
     asteroid.destroy()
   }
 
