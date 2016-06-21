@@ -1,6 +1,5 @@
 var path = require('path')
 var webpack = require('webpack')
-var BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 // Phaser webpack config
 var phaserModule = path.join(__dirname, '/node_modules/phaser/')
@@ -16,12 +15,10 @@ module.exports = {
   entry: {
     app: [
       'babel-polyfill',
-      path.resolve(__dirname, 'src/main.js')
+      path.resolve(__dirname, 'src/client/main.js')
     ]
   },
-  devtool: 'cheap-source-map',
   output: {
-    pathinfo: true,
     path: path.resolve(__dirname, 'public/dist'),
     publicPath: './public/dist/',
     filename: 'bundle.js'
@@ -29,22 +26,23 @@ module.exports = {
   watch: true,
   plugins: [
     definePlugin,
-    new BrowserSyncPlugin({
-      host: process.env.IP || 'localhost',
-      port: process.env.PORT || 3000,
-      open: false,
-      server: {
-        baseDir: ['./', './build']
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.optimize.UglifyJsPlugin({
+      drop_console: true,
+      compress: {
+        warnings: false
       }
-    })
+    }),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin()
   ],
   module: {
     loaders: [
+      { test: /\.json$/, loader: 'json' },
       { test: /\.js$/, loader: 'babel', include: path.join(__dirname, 'src') },
       { test: /pixi\.js/, loader: 'expose?PIXI' },
       { test: /phaser-split\.js$/, loader: 'expose?Phaser' },
-      { test: /p2\.js/, loader: 'expose?p2' },
-      { test: /socket\.io/, loader: 'expose?socket.io' }
+      { test: /p2\.js/, loader: 'expose?p2' }
     ]
   },
   node: {

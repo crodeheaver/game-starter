@@ -1,21 +1,18 @@
-var express = require('express')
-var port = process.env.PORT || 8080
-var app = express()
-var http = require('http').Server(app)
-var io = require('socket.io')(http)
+'use strict'
+let http = require('http')
+let path = require('path')
+let ecstatic = require('ecstatic')
+let io = require('socket.io')
+let Game = require('./src/server/game')
 
-require('./server/socket')(io)
+let port = process.env.PORT || 8080
 
-app.use(express.static('public'))
-
-app.get('*', function (req, res) {
-  res.sendFile('/index.html')
-})
-
-io.on('connection', function (socket) {
-  console.log('a user connected')
-})
-
-http.listen(port, function () {
-  console.log('Stroids listening on port ' + port)
+let server = http.createServer(
+  ecstatic({ root: path.resolve(__dirname, './public') })
+).listen(port, function (err) {
+  if (err) {
+    throw err
+  }
+  console.log('listening on port ' + port)
+  //let game = new Game(io.listen(server), 9600, 5400)
 })
